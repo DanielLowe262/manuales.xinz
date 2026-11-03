@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manuales de Legos Xinz - Biblioteca Comunitaria</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>🧩 Manuales & Instructivos Xinz</h1>
+        <p>Haz clic en cualquier set para ver las fotos del manual o descargar el PDF.</p>
+        <input type="text" id="searchInput" onkeyup="buscarSet()" placeholder="🔍 Buscar por código o nombre (ej: 101, auto)...">
+    </header>
+
+    <main>
+        <div class="grid-container" id="gridManuales">
+
+            <div class="card" data-search="xinz 8402 lego bloque">
+                <div class="caja-container" onclick="abrirModal('Xinz 8402', 'img/xinz-8402-frontal.jpg', 'img/xinz-8402-trasera.jpg', 'manuales/xinz-8402.pdf')">
+                    <img src="img/xinz-8402-caja.jpg" alt="Caja Xinz 8402" onerror="this.src='https://via.placeholder.com/300x200?text=Foto+Caja+8402'">
+                    <div class="overlay-click">🔍 Ver Manual</div>
+                </div>
+
+                <div class="card-info">
+                    <span class="codigo-badge">Xinz 8402</span>
+                    <h3>Set Xinz 8402</h3>
+                    <button class="btn btn-ver-manual" onclick="abrirModal('Xinz 8402', 'img/xinz-8402-frontal.jpg', 'img/xinz-8402-trasera.jpg', 'manuales/xinz-8402.pdf')">
+                        📖 Ver Manual (Fotos y PDF)
+                    </button>
+                </div>
+            </div>
+
+            <!-- ======================================================== -->
+            <!--                  TARJETA DEL SET XINZ 101                -->
+            <!-- ======================================================== -->
+            <div class="card" data-search="xinz 101 auto deportivo coche">
+                <!-- Foto de la Caja (Haz clic para abrir el visor) -->
+                <div class="caja-container" onclick="abrirModal('Xinz 101 - Auto Deportivo', 'img/xinz-101-frontal.jpg', 'img/xinz-101-trasera.jpg', 'manuales/xinz-101.pdf')">
+                    <img src="img/xinz-101-caja.jpg" alt="Caja Xinz 101" onerror="this.src='https://via.placeholder.com/300x200?text=Foto+Caja'">
+                    <div class="overlay-click">🔍 Ver Manual</div>
+                </div>
+
+                <divclass="card-info">
+                    <span class="codigo-badge">Xinz 101</span>
+                    <h3>Auto Deportivo</h3>
+                    <button class="btn btn-ver-manual" onclick="abrirModal('Xinz 101 - Auto Deportivo', 'img/xinz-101-frontal.jpg', 'img/xinz-101-trasera.jpg', 'manuales/xinz-101.pdf')">
+                        📖 Ver Manual (Fotos y PDF)
+                    </button>
+                </divclass=>
+            </div>
+            <!-- ======================================================== -->
+
+            <!-- EJEMPLO DE OTRO SET (XINZ 102) -->
+            <div class="card" data-search="xinz 102 mecha robot">
+                <div class="caja-container" onclick="abrirModal('Xinz 102 - Mecha Robot', 'img/xinz-102-frontal.jpg', 'img/xinz-102-trasera.jpg', 'manuales/xinz-102.pdf')">
+                    <img src="img/xinz-102-caja.jpg" alt="Caja Xinz 102" onerror="this.src='https://via.placeholder.com/300x200?text=Foto+Caja'">
+                    <div class="overlay-click">🔍 Ver Manual</div>
+                </div>
+
+                <div class="card-info">
+                    <span class="codigo-badge">Xinz 102</span>
+                    <h3>Mecha Robot</h3>
+                    <button class="btn btn-ver-manual" onclick="abrirModal('Xinz 102 - Mecha Robot', 'img/xinz-102-frontal.jpg', 'img/xinz-102-trasera.jpg', 'manuales/xinz-102.pdf')">
+                        📖 Ver Manual (Fotos y PDF)
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ======================================================== -->
+    <!--            VEN TANA MODAL / POPUP PARA EL MANUAL          -->
+    <!-- ======================================================== -->
+    <div id="modalManual" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="cerrarModal()">&times;</span>
+            <h2 id="modalTitle">Título del Set</h2>
+            
+            <p class="modal-subtitle">📸 Vista del manual (Frontal y Trasera):</p>
+            
+            <div class="manual-photos-grid">
+                <div>
+                    <p><strong>Parte Delantera:</strong></p>
+                    <img id="imgFrontal" src="" alt="Manual Frontal" onerror="this.src='https://via.placeholder.com/300x400?text=Frontal+No+Disponible'">
+                </div>
+                <div>
+                    <p><strong>Parte Trasera:</strong></p>
+                    <img id="imgTrasera" src="" alt="Manual Trasero" onerror="this.src='https://via.placeholder.com/300x400?text=Trasera+No+Disponible'">
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <a id="btnPdfVer" href="#" target="_blank" class="btn btn-pdf">👁️ Abrir PDF Completo</a>
+                <a id="btnPdfDescargar" href="#" download class="btn btn-descargar">📥 Descargar PDF</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Abrir ventana flotante del manual
+        function abrirModal(titulo, fotoFrontal, fotoTrasera, pdfPath) {
+            document.getElementById('modalTitle').innerText = titulo;
+            document.getElementById('imgFrontal').src = fotoFrontal;
+            document.getElementById('imgTrasera').src = fotoTrasera;
+            
+            document.getElementById('btnPdfVer').href = pdfPath;
+            document.getElementById('btnPdfDescargar').href = pdfPath;
+
+            document.getElementById('modalManual').style.display = "flex";
+        }
+
+        // Cerrar ventana flotante
+        function cerrarModal() {
+            document.getElementById('modalManual').style.display = "none";
+        }
+
+        // Cerrar al hacer clic fuera del modal
+        window.onclick = function(event) {
+            let modal = document.getElementById('modalManual');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Buscador
+        function buscarSet() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let tarjetas = document.getElementsByClassName('card');
+
+            for (let i = 0; i < tarjetas.length; i++) {
+                let busqueda = tarjetas[i].getAttribute('data-search').toLowerCase();
+                if (busqueda.includes(input)) {
+                    tarjetas[i].style.display = "flex";
+                } else {
+                    tarjetas[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

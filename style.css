@@ -1,0 +1,218 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+header {
+    background: linear-gradient(135deg, #e63946, #b7094c);
+    color: white;
+    text-align: center;
+    padding: 2.5rem 1rem;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+#searchInput {
+    width: 90%;
+    max-width: 550px;
+    padding: 14px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    outline: none;
+}
+
+main {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Contenedor de la foto de la caja */
+.caja-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.caja-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay-click {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.caja-container:hover .overlay-click {
+    opacity: 1;
+}
+
+.card-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.codigo-badge {
+    background-color: #457b9d;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 4px;
+    align-self: flex-start;
+    margin-bottom: 8px;
+}
+
+.card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: #1d3557;
+}
+
+.btn-ver-manual {
+    background-color: #e63946;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    margin-top: auto;
+}
+
+.btn-ver-manual:hover {
+    background-color: #d62828;
+}
+
+/* ======================================================== */
+/* ESTILOS DE LA VENTANA MODAL / POPUP                      */
+/* ======================================================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 12px;
+    max-width: 700px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 25px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
+.modal-subtitle {
+    margin: 15px 0 10px 0;
+    color: #555;
+}
+
+.manual-photos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.manual-photos-grid img {
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn {
+    flex: 1;
+    text-align: center;
+    padding: 12px 0;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.btn-pdf {
+    background-color: #2a9d8f;
+    color: white;
+}
+
+.btn-descargar {
+    background-color: #264653;
+    color: white;
+}
