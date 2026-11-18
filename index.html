@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manuales de Xinz - Biblioteca Comunitaria</title>
+    <title>Manuales de Bloques - Biblioteca Comunitaria</title>
     <link rel="stylesheet" href="style.css">
     <style>
         /* Estilos específicos para la cabecera de búsqueda y filtros en línea */
@@ -36,13 +36,21 @@
             background: #a855f7;
             font-weight: bold;
         }
-        /* Contenedor flexible para código y etiqueta de tamaño lado a lado */
+        /* Contenedor flexible para marca, código y etiquetas lado a lado */
         .header-info {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 8px;
             flex-wrap: wrap;
+        }
+        .marca-badge {
+            background: #a855f7;
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
         }
         .tamano-badge {
             background: #374151;
@@ -52,18 +60,27 @@
             font-size: 0.85rem;
             font-weight: bold;
         }
+        /* Ajuste de modal simplificado sin fotos */
+        .modal-content-simple {
+            text-align: center;
+            padding: 20px;
+        }
+        .modal-content-simple p {
+            margin: 20px 0;
+            color: #cbd5e1;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🧩 Manuales & Instructivos Xinz</h1>
-        <p>Haz clic en cualquier set para ver las fotos del manual o descargar el PDF.</p>
+        <h1>🧩 Manuales & Instructivos - Biblioteca Comunitaria</h1>
+        <p>Haz clic en cualquier set para ver las opciones del manual o descargar el PDF.</p>
         
         <!-- BARRA DE BÚSQUEDA Y FILTROS JUNTOS -->
         <div class="search-filter-wrapper">
             <div class="search-box">
-                <input type="text" id="searchInput" onkeyup="buscarSet()" placeholder="🔍 Buscar por código o nombre...">
+                <input type="text" id="searchInput" onkeyup="buscarSet()" placeholder="🔍 Buscar por marca, código o nombre...">
                 <button onclick="limpiarBusqueda()" class="btn-clear" title="Limpiar búsqueda">❌</button>
             </div>
 
@@ -99,29 +116,17 @@
 
     <main>
         <div class="grid-container" id="gridManuales"></div>
-        <p id="noResults" class="no-results" style="display: none;">😕 No se encontró ningún set con ese nombre o código.</p>
+        <p id="noResults" class="no-results" style="display: none;">😕 No se encontró ningún set con ese nombre, marca o código.</p>
     </main>
 
-    <!-- VENTANA MODAL / POPUP PARA EL MANUAL -->
+    <!-- VENTANA MODAL / POPUP SIMPLIFICADA (SIN FOTOS) -->
     <div id="modalManual" class="modal">
-        <div class="modal-content">
+        <div class="modal-content modal-content-simple">
             <span class="close-btn" onclick="cerrarModal()">&times;</span>
             <h2 id="modalTitle">Título del Set</h2>
+            <p>Selecciona una opción para acceder al instructivo en PDF:</p>
             
-            <p class="modal-subtitle">📸 Vista del manual (Frontal y Trasera):</p>
-            
-            <div class="manual-photos-grid">
-                <div>
-                    <p><strong>Parte Delantera:</strong></p>
-                    <img id="imgFrontal" src="" alt="Manual Frontal" onerror="this.src='https://via.placeholder.com/300x400?text=Frontal+No+Disponible'">
-                </div>
-                <div>
-                    <p><strong>Parte Trasera:</strong></p>
-                    <img id="imgTrasera" src="" alt="Manual Trasero" onerror="this.src='https://via.placeholder.com/300x400?text=Trasera+No+Disponible'">
-                </div>
-            </div>
-
-            <div class="modal-actions">
+            <div class="modal-actions" style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
                 <a id="btnPdfVer" href="#" target="_blank" class="btn btn-pdf">👁️ Abrir PDF Completo</a>
                 <a id="btnPdfDescargar" href="#" download class="btn btn-descargar">📥 Descargar PDF</a>
             </div>
@@ -131,24 +136,31 @@
     <script>
         const listaManuales = [
             {
+                marca: "Xinz",
                 codigo: "8005",
                 nombre: "CookieAnn",
                 tamano: "jumbo",
                 busqueda: "xinz 8005 CookieAnn",
                 caja: "img/xinz-8005-caja.jpeg",
-                frontal: "img/xinz-8005-frontal.jpg",
-                trasera: "img/xinz-8005-trasera.jpg",
                 pdf: "manuales/xinz-8005.pdf"
             },
             {
+                marca: "Xinz",
                 codigo: "8402",
                 nombre: "Tralalero Tralala",
                 tamano: "jumbo",
                 busqueda: "xinz 8402 brainrot meme",
                 caja: "img/xinz-8402-caja.jpeg",
-                frontal: "img/xinz-8402-frontal.jpg",
-                trasera: "img/xinz-8402-trasera.jpg",
                 pdf: "manuales/xinz-8402.pdf"
+            },
+            {
+                marca: "Xinz",
+                codigo: "PT6023",
+                nombre: "Capitan America",
+                tamano: "jumbo",
+                busqueda: "xinz PT6023 Capitan America heroe marvel",
+                caja: "img/xinz-PT6023-caja.jpeg",
+                pdf: "manuales/xinz-PT6023.pdf"
             },
             {
                 codigo: "8301",
@@ -156,8 +168,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8301 Gato Calicó animal",
                 caja: "img/xinz-8301-caja.jpeg",
-                frontal: "img/xinz-8301-frontal.jpg",
-                trasera: "img/xinz-8301-trasera.jpg",
                 pdf: "manuales/xinz-8301.pdf"
             },
             {
@@ -166,8 +176,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8091 Spyduck pokemon",
                 caja: "img/xinz-8091-caja.jpeg",
-                frontal: "img/xinz-8091-frontal.jpg",
-                trasera: "img/xinz-8091-trasera.jpg",
                 pdf: "manuales/xinz-8091.pdf"
             },
             {
@@ -176,8 +184,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8303 Gato bicolor animal",
                 caja: "img/xinz-8303-caja.jpeg",
-                frontal: "img/xinz-8303-frontal.jpg",
-                trasera: "img/xinz-8303-trasera.jpg",
                 pdf: "manuales/xinz-8303.pdf"
             },
             {
@@ -186,18 +192,15 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8305 Gato siames animal",
                 caja: "img/xinz-8305-caja.jpeg",
-                frontal: "img/xinz-8305-frontal.jpg",
-                trasera: "img/xinz-8305-trasera.jpg",
                 pdf: "manuales/xinz-8305.pdf"
             },
+
             {
                 codigo: "8306",
                 nombre: "Gato blanco con plomo",
                 tamano: "jumbo",
                 busqueda: "xinz 8306 Gato blanco con plomo animal",
                 caja: "img/xinz-8306-caja.jpeg",
-                frontal: "img/xinz-8306-frontal.jpg",
-                trasera: "img/xinz-8306-trasera.jpg",
                 pdf: "manuales/xinz-8306.pdf"
             },
             {
@@ -206,8 +209,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8304 Gato Atigrado animal",
                 caja: "img/xinz-8304-caja.jpeg",
-                frontal: "img/xinz-8304-frontal.jpg",
-                trasera: "img/xinz-8304-trasera.jpg",
                 pdf: "manuales/xinz-8304.pdf"
             },
             {
@@ -216,8 +217,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8361 Snoopy Piloto perro animal",
                 caja: "img/xinz-8361-caja.jpeg",
-                frontal: "img/xinz-8361-frontal.jpg",
-                trasera: "img/xinz-8361-trasera.jpg",
                 pdf: "manuales/xinz-8361.pdf"
             },
             {
@@ -236,8 +235,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8094 Sonic bebé velocista",
                 caja: "img/xinz-8094-caja.jpeg",
-                frontal: "img/xinz-8094-frontal.jpg",
-                trasera: "img/xinz-8094-trasera.jpg",
                 pdf: "manuales/xinz-8094.pdf"
             },
             {
@@ -246,8 +243,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8009 Excavadora vehiculo de construccion",
                 caja: "img/xinz-8009-caja.jpeg",
-                frontal: "img/xinz-8009-frontal.jpg",
-                trasera: "img/xinz-8009-trasera.jpg",
                 pdf: "manuales/xinz-8009.pdf"
             },
             {
@@ -256,8 +251,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8365 Furia Nocturna como entrenar a tu dragon",
                 caja: "img/xinz-8365-caja.jpeg",
-                frontal: "img/xinz-8365-frontal.jpg",
-                trasera: "img/xinz-8365-trasera.jpg",
                 pdf: "manuales/xinz-8365.pdf"
             },
             {
@@ -266,8 +259,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8077 Thor heroe marvel",
                 caja: "img/xinz-8077-caja.jpeg",
-                frontal: "img/xinz-8077-frontal.jpg",
-                trasera: "img/xinz-8077-trasera.jpg",
                 pdf: "manuales/xinz-8077.pdf"
             },
             {
@@ -286,8 +277,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8013 Helicóptero vehiculo militar",
                 caja: "img/xinz-8013-caja.jpeg",
-                frontal: "img/xinz-8013-frontal.jpg",
-                trasera: "img/xinz-8013-trasera.jpg", 
                 pdf: "manuales/xinz-8013.pdf"
             },
             {
@@ -296,8 +285,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8054 Katana Naranja con Blanco arma",
                 caja: "img/xinz-8054-caja.jpeg",    
-                frontal: "img/xinz-8054-frontal.jpg",
-                trasera: "img/xinz-8054-trasera.jpg",
                 pdf: "manuales/xinz-8054.pdf"
             },
             {
@@ -306,8 +293,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8119 Winnie the Pooh",  
                 caja: "img/xinz-8119-caja.jpeg",
-                frontal: "img/xinz-8119-frontal.jpg",      
-                trasera: "img/xinz-8119-trasera.jpg",
                 pdf: "manuales/xinz-8119.pdf"
             },
             {
@@ -316,8 +301,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8110 Panda animal",  
                 caja: "img/xinz-8110-caja.jpeg",
-                frontal: "img/xinz-8110-frontal.jpg",      
-                trasera: "img/xinz-8110-trasera.jpg",
                 pdf: "manuales/xinz-8110.pdf"
             },
             {
@@ -326,8 +309,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8104 Don Cangrejo Bob Esponja",  
                 caja: "img/xinz-8104-caja.jpeg",
-                frontal: "img/xinz-8104-frontal.jpg",      
-                trasera: "img/xinz-8104-trasera.jpg",
                 pdf: "manuales/xinz-8104.pdf"
             },
             {
@@ -336,8 +317,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8240 Garfield gato animal",  
                 caja: "img/xinz-8240-caja.jpeg",
-                frontal: "img/xinz-8240-frontal.jpg",      
-                trasera: "img/xinz-8240-trasera.jpg",
                 pdf: "manuales/xinz-8240.pdf"
             },
             {
@@ -346,8 +325,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8132 Stormtrooper star wars soldado imperial",  
                 caja: "img/xinz-8132-caja.jpeg",
-                frontal: "img/xinz-8132-frontal.jpg",      
-                trasera: "img/xinz-8132-trasera.jpg",
                 pdf: "manuales/xinz-8132.pdf"
             },
             {
@@ -366,8 +343,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8366 Furia luminosa como entrenar a tu dragon",  
                 caja: "img/xinz-8366-caja.jpeg",
-                frontal: "img/xinz-8366-frontal.jpg",      
-                trasera: "img/xinz-8366-trasera.jpg",
                 pdf: "manuales/xinz-8366.pdf"
             },
             {
@@ -376,8 +351,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8241 Garfield Tio Sam gato animal",  
                 caja: "img/xinz-8241-caja.jpeg",
-                frontal: "img/xinz-8241-frontal.jpg",      
-                trasera: "img/xinz-8241-trasera.jpg",
                 pdf: "manuales/xinz-8241.pdf"
             },
             {
@@ -396,8 +369,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8098 Dinosaurio prehistorico Animal",  
                 caja: "img/xinz-8098-caja.jpeg",
-                frontal: "img/xinz-8098-frontal.jpg",      
-                trasera: "img/xinz-8098-trasera.jpg",
                 pdf: "manuales/xinz-8098.pdf"
             },
             {
@@ -406,8 +377,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8050 Katana Amarilla con Blanco y detalles en Negro arma",  
                 caja: "img/xinz-8050-caja.jpeg",
-                frontal: "img/xinz-8050-frontal.jpg",      
-                trasera: "img/xinz-8050-trasera.jpg",
                 pdf: "manuales/xinz-8050.pdf"
             },
             {
@@ -416,18 +385,14 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8362 Guason villano DC ",  
                 caja: "img/xinz-8362-caja.jpeg",
-                frontal: "img/xinz-8362-frontal.jpg",      
-                trasera: "img/xinz-8362-trasera.jpg",
                 pdf: "manuales/xinz-8362.pdf"
-            }, 
+            },
             {
                 codigo: "8160",
                 nombre: "Chase Paw Patrol",
                 tamano: "jumbo",
                 busqueda: "xinz 8160 Chase Paw Patrol perro animal",
                 caja: "img/xinz-8160-caja.jpeg",
-                frontal: "img/xinz-8160-frontal.jpg",      
-                trasera: "img/xinz-8160-trasera.jpg",
                 pdf: "manuales/xinz-8160.pdf"
             },
             {
@@ -436,8 +401,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8458 Copa del Mundial deporte",
                 caja: "img/xinz-8458-caja.jpeg",
-                frontal: "img/xinz-8458-frontal.jpg",
-                trasera: "img/xinz-8458-trasera.jpg",
                 pdf: "manuales/xinz-8458.pdf"
             },
             {
@@ -446,18 +409,14 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8131 R2D2 star wars droide",
                 caja: "img/xinz-8131-caja.jpeg",
-                frontal: "img/xinz-8131-frontal.jpg",
-                trasera: "img/xinz-8131-trasera.jpg",
                 pdf: "manuales/xinz-8131.pdf"
             },
             {
                 codigo: "8133",
                 nombre: "Maestro Yoda",
                 tamano: "jumbo",
-                busqueda: "xinz 8133 Maestro Yoda star wars jedi ", 
+                busqueda: "xinz 8133 Maestro Yoda star wars jedi ",
                 caja: "img/xinz-8133-caja.jpeg",
-                frontal: "img/xinz-8133-frontal.jpg",
-                trasera: "img/xinz-8133-trasera.jpg",
                 pdf: "manuales/xinz-8133.pdf"
             },
             {
@@ -476,8 +435,6 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8130 Darth Vader star wars villano",
                 caja: "img/xinz-8130-caja.jpeg",
-                frontal: "img/xinz-8130-frontal.jpg",
-                trasera: "img/xinz-8130-trasera.jpg",
                 pdf: "manuales/xinz-8130.pdf"
             },
             {
@@ -496,13 +453,339 @@
                 tamano: "jumbo",
                 busqueda: "xinz 8351 Spider Man con buzo y capucha heroe marvel",
                 caja: "img/xinz-8351-caja.jpeg",
-                frontal: "img/xinz-8351-frontal.jpg",
-                trasera: "img/xinz-8351-trasera.jpg",
                 pdf: "manuales/xinz-8351.pdf"
-            }
+            }, 
+            { //nuevos
+                codigo: "8185",
+                nombre: "Wolwerine",
+                tamano: "jumbo",
+                busqueda: "xinz 8185 Wolwerine heroe marvel x men",
+                caja: "img/xinz-8185-caja.jpg",
+                pdf: "manuales/xinz-8185.pdf"
+            },
+            {
+                codigo: "8300",
+                nombre: "Gata blanca con heterocromia",
+                tamano: "jumbo",
+                busqueda: "xinz 8300 Gata blanca con heterocromia",
+                caja: "img/xinz-8300-caja.jpg",
+                pdf: "manuales/xinz-8300.pdf"
+            },
+            {
+                codigo: "8346",
+                nombre: "Piolin",
+                tamano: "jumbo",
+                busqueda: "Piolin Looney Toons",
+                caja: "img/xinz-8346-caja.jpg",
+                pdf: "manuales/xinz-8346.pdf"
+            },
+            {
+                codigo: "8302",
+                nombre: "Gato blanco con plomo dando la pata",
+                tamano: "jumbo",
+                busqueda: "xinz 8302 Gato blanco con plomo dando la pata",
+                caja: "img/xinz-8302-caja.jpg",
+                pdf: "manuales/xinz-8302.pdf"
+            },
+            {
+                codigo: "8310",
+                nombre: "Perro Pug",
+                tamano: "jumbo",
+                busqueda: "xinz 8310 Perro Pug animal de compania mascota",
+                caja: "img/xinz-8310-caja.jpg",
+                pdf: "manuales/xinz-8310.pdf"
+            },
+            {
+                codigo: "8343",
+                nombre: "Crash Bandicoot",
+                tamano: "jumbo",
+                busqueda: "Crash Bandicoot Juego retro",
+                caja: "img/xinz-8343-caja.jpg",
+                pdf: "manuales/xinz-8343.pdf"
+            },
+            {
+                codigo: "8348",
+                nombre: "Coyote",
+                tamano: "jumbo",
+                busqueda: "Coyete looney toons correcaminos animado",
+                caja: "img/xinz-8348-caja.jpg",
+                pdf: "manuales/xinz-8348.pdf"
+            },
+            {
+                codigo: "8356",
+                nombre: "Angelica Pickles",
+                tamano: "jumbo",
+                busqueda: "Angelica Pickles los Rugrats",
+                caja: "img/xinz-8356-caja.jpg",
+                pdf: "manuales/xinz-8356.pdf"
+            },
+            {
+                codigo: "8367",
+                nombre: "Pinocho",
+                tamano: "jumbo",
+                busqueda: "Pinocho Disney cuento infantil",
+                caja: "img/xinz-8367-caja.jpg",
+                pdf: "manuales/xinz-8367.pdf"
+            },
+            {
+                codigo: "8460",
+                nombre: "Maple mascota de Canada mundial 2026",
+                tamano: "jumbo",
+                busqueda: "Maple mascota de Canada mundial 2026 Fifa futbol",
+                caja: "img/xinz-8460-caja.jpg",
+                pdf: "manuales/xinz-8460.pdf"
+            },
+            {
+                codigo: "8459",
+                nombre: "Sayu mascota de Mexico mundial 2026",
+                tamano: "jumbo",
+                busqueda: "Sayu mascota de Mexico mundial 2026 Fifa futbol",
+                caja: "img/xinz-8459-caja.jpg",
+                pdf: "manuales/xinz-8459.pdf"
+            },
+            {
+                codigo: "8461",
+                nombre: "Clutch mascota de USA mundial 2026",
+                tamano: "jumbo",
+                busqueda: "Maple mascota de USA mundial 2026 Fifa futbol",
+                caja: "img/xinz-8461-caja.jpg",
+                pdf: "manuales/xinz-8461.pdf"
+            },
+            {
+                codigo: "8462",
+                nombre: "Cristiano Ronaldo mundial 2026",
+                tamano: "jumbo",
+                busqueda: "Cristiano Ronaldo CR7 jugador mundial 2026 Fifa futbol",
+                caja: "img/xinz-8462-caja.jpg",
+                pdf: "manuales/xinz-8462.pdf"
+            },
+            {
+                codigo: "8465",
+                nombre: "Leonel Messi mundial 2026",
+                tamano: "jumbo",
+                busqueda: "Leonel Messi jugador mundial 2026 Fifa futbol",
+                caja: "img/xinz-8465-caja.jpg",
+                pdf: "manuales/xinz-8465.pdf"
+            },
+             {
+                codigo: "8488",
+                nombre: "Trunks del Futuro",
+                tamano: "jumbo",
+                busqueda: "Trunks del futuro dragon ball z anime ",
+                caja: "img/xinz-8488-caja.jpg",
+                pdf: "manuales/xinz-8488.pdf"
+            },
+            {
+                codigo: "8257",
+                nombre: "Labubu  Monster Azul",
+                tamano: "jumbo",
+                busqueda: "Labubu Monster Azul ",
+                caja: "img/xinz-8257-caja.jpeg",
+                pdf: "manuales/xinz-8257.pdf"
+            },
+            {
+                codigo: "8554",
+                nombre: "Power Ranger Amarilla",
+                tamano: "jumbo",
+                busqueda: "Power Ranger Amarilla",
+                caja: "img/xinz-8554-caja.jpg",
+                pdf: "manuales/xinz-8554.pdf"
+            },
+            {
+                codigo: "8552",
+                nombre: "Power Ranger Verde",
+                tamano: "jumbo",
+                busqueda: "Power Ranger Verde Tommy Oliver",
+                caja: "img/xinz-8552-caja.jpg",
+                pdf: "manuales/xinz-8552.pdf"
+            },
+            {
+                codigo: "8551",
+                nombre: "Power Ranger Rojo",
+                tamano: "jumbo",
+                busqueda: "Power Ranger rojo ",
+                caja: "img/xinz-8551-caja.jpg",
+                pdf: "manuales/xinz-8551.pdf"
+            },
+            {
+                codigo: "8553",
+                nombre: "Power Ranger Azul",
+                tamano: "jumbo",
+                busqueda: "Power Ranger Azul ",
+                caja: "img/xinz-8553-caja.jpg",
+                pdf: "manuales/xinz-8553.pdf"
+            },
+            {
+                codigo: "8541",
+                nombre: "Pac Man",
+                tamano: "jumbo",
+                busqueda: "Pac Man videojuego clasico retro",
+                caja: "img/xinz-8541-caja.jpg",
+                pdf: "manuales/xinz-8541.pdf"
+            },
+            {
+                codigo: "8355",
+                nombre: "Lola Bunny",
+                tamano: "jumbo",
+                busqueda: "Lola Bunny Looney Toons ",
+                caja: "img/xinz-8355-caja.jpg",
+                pdf: "manuales/xinz-8355.pdf"
+            },
+            {
+                codigo: "8550",
+                nombre: "Scrappy Doo",
+                tamano: "jumbo",
+                busqueda: "Scrappy Doo Scooby Doo ",
+                caja: "img/xinz-8550-caja.jpg",
+                pdf: "manuales/xinz-8550.pdf"
+            },
+            {   codigo: "5196",
+                nombre: "Piccolo Daimaku",
+                tamano: "Mediano",
+                busqueda: "Piccolo Daimaku Picoro Dragon Ball Z guerrero",
+                caja: "img/xinz-5196-caja.jpg",
+                pdf: "manuales/xinz-5196.pdf"
+            },
+            {
+                codigo: "5314",
+                nombre: "Homero Simpson",
+                tamano: "Mediano",
+                busqueda: "Homero Simpson Los Simpson Springfield clasica caricatura",
+                caja: "img/xinz-5314-caja.jpg",
+                pdf: "manuales/xinz-5314.pdf"
+            },
+            {
+                codigo: "5362",
+                nombre: "Boo disfrazada Monsters Inc",
+                tamano: "Mediano",
+                busqueda: " boo disfrazada Monsters Inc",
+                caja: "img/xinz-5362-caja.jpg",
+                pdf: "manuales/xinz-5362.pdf"
+            },
+            {
+                codigo: "5323",
+                nombre: "Silvestre con Jeans",
+                tamano: "Mediano",
+                busqueda: "Silvestre com Jeans Looney toons clasico animado",
+                caja: "img/xinz-5323-caja.jpg",
+                pdf: "manuales/xinz-5323.pdf"
+            },
+            {
+                codigo: "6002",
+                nombre: "Pikachu",
+                tamano: "Jumbo",
+                busqueda: "Pikachu Pokemon",
+                caja: "img/xinz-6002-caja.jpg",
+                pdf: "manuales/xinz-6002.pdf"
+            },
+            {
+                codigo: "PT6008",
+                nombre: "Monkey D. Luffy",
+                tamano: "Jumbo",
+                busqueda: "Monkey D. Luffy One Piece",
+                caja: "img/xinz-pt6008-caja.jpg",
+                pdf: "manuales/xinz-6008.pdf"
+            },
+            {
+                codigo: "6048",
+                nombre: "Gato Tom",
+                tamano: "Jumbo",
+                busqueda: "Gato Tom y Jerry clasico caricatura",
+                caja: "img/xinz-6048-caja.jpg",
+                pdf: "manuales/xinz-6048.pdf"
+            },
+            {
+                codigo: "8038",
+                nombre: "Shinobu Kocho ",
+                tamano: "Jumbo",
+                busqueda: "Shinobu kocho Pilar del insector demon Slaye Kimetsu no Yaiba",
+                caja: "img/xinz-8038-caja.jpg",
+                pdf: "manuales/xinz-8038.pdf"
+            },
+            {
+                codigo: "8061",
+                nombre: "Maestro Roshi",
+                tamano: "Jumbo",
+                busqueda: "Maestro Roshi Dragon Ball Z",
+                caja: "img/xinz-8061-caja.jpg",
+                pdf: "manuales/xinz-8061.pdf"
+            },
+            {
+                codigo: "8063",
+                nombre: "Milk Pequeña",
+                tamano: "Jumbo",
+                busqueda: "Milk Pequeña Dragon Ball Z",
+                caja: "img/xinz-8063-caja.jpg",
+                pdf: "manuales/xinz-8063.pdf"
+            },
+            {
+                codigo: "8505",
+                nombre: "Bender",
+                tamano: "Jumbo",
+                busqueda: "Bender Futurama Robot",
+                caja: "img/xinz-8505-caja.jpg",
+                pdf: "manuales/xinz-8505.pdf"
+            },
+            {
+                codigo: "8129",
+                nombre: "Tinker Bell",
+                tamano: "Jumbo",
+                busqueda: "Tinkerbell hada disney princesas",
+                caja: "img/xinz-8129-caja.jpg",
+                pdf: "manuales/xinz-8129.pdf"
+            },
+            {
+                codigo: "8196",
+                nombre: "Spiderman",
+                tamano: "Jumbo",
+                busqueda: " Spiderman hombre araña heroe marvel",
+                caja: "img/xinz-8196-caja.jpg",
+                pdf: "manuales/xinz-8196.pdf"
+            },
+            {
+                codigo: "8354",
+                nombre: "Bugs Bunny",
+                tamano: "Jumbo",
+                busqueda: "Bugs bunny conejo Looney Toons caricatura clasica",
+                caja: "img/xinz-8354-caja.jpg",
+                pdf: "manuales/xinz-8354.pdf",
+            }, 
+            {
+                codigo: "8376",
+                nombre: "Chucky",
+                tamano: "Jumbo",
+                busqueda: "Chucky terror halloween ",
+                caja: "img/xinz-8376-caja.jpg",
+                pdf: "manuales/xinz-8376.pdf"
+            },
+            {
+                codigo: "8118",
+                nombre: "Tigre",
+                tamano: "Jumbo",
+                busqueda: "Tigre Tiger Winie de poo",
+                caja: "img/xinz-8118-caja.png",
+                pdf: "manuales/xinz-8118.pdf"
+            },
+            {
+                codigo: "8095",
+                nombre: "Uzui Tengen",
+                tamano: "Jumbo",
+                busqueda: "Uzui Tengen Kimetsu no Yaiba Pilar del sonido demon Slaye ",
+                caja: "img/xinz-8095-caja.jpg",
+                pdf: "manuales/xinz-8095.pdf"
+            },
+            {
+                codigo: "8117",
+                nombre: "Blancanieves",
+                tamano: "Jumbo",
+                busqueda: "Blancanieves princesa disney clasico",
+                caja: "img/xinz-8117-caja.jpg",
+                pdf : "manuales/xinz-8117.pdf"
+            },
+        
+            // Aquí puedes agregar más sets y cambiar la "marca" según necesites (ej. marca: "Lepin", marca: "Loong", etc.)
         ];
 
-        // Variable global para recordar qué filtro de tamaño está activo actualmente
         let tamanoActual = 'todos';
 
         function cargarManuales() {
@@ -511,21 +794,16 @@
 
         window.onload = cargarManuales;
 
-        // Cerrar modal con la tecla Escape (ESC)
         window.addEventListener('keydown', function(event) {
             if (event.key === "Escape") {
                 cerrarModal();
             }
         });
 
-        function abrirModal(titulo, fotoFrontal, fotoTrasera, pdfPath) {
+        function abrirModal(titulo, pdfPath) {
             document.getElementById('modalTitle').innerText = titulo;
-            document.getElementById('imgFrontal').src = fotoFrontal;
-            document.getElementById('imgTrasera').src = fotoTrasera;
-            
             document.getElementById('btnPdfVer').href = pdfPath;
             document.getElementById('btnPdfDescargar').href = pdfPath;
-
             document.getElementById('modalManual').style.display = "flex";
         }
 
@@ -545,31 +823,24 @@
             ejecutarFiltrosCombinados();
         }
 
-        // 1. Función para filtrar por tamaño (botones)
         function filtrarModelos(tamanoSeleccionado) {
             tamanoActual = tamanoSeleccionado;
-
-            // Actualizar la clase 'active' en los botones visualmente
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-
             ejecutarFiltrosCombinados();
         }
 
-        // 2. Función del buscador de texto en tiempo real
         function buscarSet() {
             ejecutarFiltrosCombinados();
         }
 
-        // 3. Función central que une ambos filtros (Texto + Tamaño) y dibuja el grid
         function ejecutarFiltrosCombinados() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let noResults = document.getElementById('noResults');
             const grid = document.getElementById("gridManuales");
             
-            grid.innerHTML = ""; // Limpiamos el contenedor de tarjetas
+            grid.innerHTML = "";
 
-            // Ordenamiento inteligente previo
             listaManuales.sort((a, b) => {
                 let numA = parseInt(a.codigo.replace(/\D/g, '')) || 0;
                 let numB = parseInt(b.codigo.replace(/\D/g, '')) || 0;
@@ -579,36 +850,36 @@
                 return numA - numB;
             });
 
-            // Filtrado combinando texto y tamaño seleccionado
             let manualesFiltrados = listaManuales.filter(item => {
                 let coincideTamano = (tamanoActual === 'todos' || (item.tamano && item.tamano.toLowerCase() === tamanoActual.toLowerCase()));
-                let coincideTexto = item.busqueda.toLowerCase().includes(input) || item.nombre.toLowerCase().includes(input) || item.codigo.toLowerCase().includes(input);
+                let textoBusquedaCompleta = `${item.marca || 'Xinz'} ${item.codigo} ${item.nombre} ${item.busqueda}`.toLowerCase();
+                let coincideTexto = textoBusquedaCompleta.includes(input);
 
                 return coincideTamano && coincideTexto;
             });
 
-            // Renderizamos las tarjetas resultantes (con código y etiqueta de tamaño al lado)
             manualesFiltrados.forEach(item => {
-                let tituloCompleto = `Xinz ${item.codigo} ${item.nombre}`;
+                let marcaSet = item.marca || "Xinz";
+                let tituloCompleto = `${marcaSet} ${item.codigo} ${item.nombre}`;
                 
                 let tarjeta = `
                     <div class="card" data-search="${item.busqueda}" data-tamano="${item.tamano}">
-                        <div class="caja-container" onclick="abrirModal('${tituloCompleto}', '${item.frontal}', '${item.trasera}', '${item.pdf}')">
-                            <img src="${item.caja}" alt="Caja Xinz ${item.codigo}" onerror="this.src='https://via.placeholder.com/300x200?text=Foto+Caja'">
-                            <div class="overlay-click">🔍 Ver Manual</div>
+                        <div class="caja-container" onclick="abrirModal('${tituloCompleto}', '${item.pdf}')">
+                            <img src="${item.caja}" alt="Caja ${marcaSet} ${item.codigo}" onerror="this.src='https://via.placeholder.com/300x200?text=Foto+Caja'">
+                            <div class="overlay-click">📖 Ver Opciones PDF</div>
                         </div>
 
                         <div class="card-info">
-                            <!-- Contenedor alineado: Código + Tamaño lado a lado -->
                             <div class="header-info">
-                                <span class="codigo-badge">Xinz ${item.codigo}</span>
+                                <span class="marca-badge">${marcaSet}</span>
+                                <span class="codigo-badge">${item.codigo}</span>
                                 <span class="tamano-badge">📐 ${item.tamano ? item.tamano.toUpperCase() : 'N/A'}</span>
                             </div>
 
                             <h3>${item.nombre}</h3>
                             
-                            <button class="btn btn-ver-manual" onclick="abrirModal('${tituloCompleto}', '${item.frontal}', '${item.trasera}', '${item.pdf}')">
-                                📖 Ver Manual (Fotos y PDF)
+                            <button class="btn btn-ver-manual" onclick="abrirModal('${tituloCompleto}', '${item.pdf}')">
+                                📄 Ver Instructivo PDF
                             </button>
                         </div>
                     </div>
@@ -616,10 +887,8 @@
                 grid.innerHTML += tarjeta;
             });
 
-            // Actualizamos el contador de resultados
             document.getElementById('contadorResultados').innerText = `Mostrando ${manualesFiltrados.length} de ${listaManuales.length} sets`;
 
-            // Control de mensaje de "No se encontraron resultados"
             if (manualesFiltrados.length === 0) {
                 noResults.style.display = "block";
             } else {
